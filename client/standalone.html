@@ -216,7 +216,8 @@
   </div>
 
   <script>
-    const api = 'http://localhost:3002/employees';
+    const BACKEND_URL = (window.API_URL || (window.location.hostname === 'localhost' ? 'http://localhost:3002' : window.location.origin)).replace(/\/$/, '');
+    const api = BACKEND_URL + '/employees';
     const grid = document.querySelector('#grid');
     const search = document.querySelector('#search');
     const empty = document.querySelector('#empty');
