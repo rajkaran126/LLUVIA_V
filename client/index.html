@@ -217,8 +217,8 @@
 
   <script>
     const BACKEND_URL = (
-      (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.VITE_API_URL) ||
-      window.API_URL ||
+      (typeof window !== 'undefined' && window.VITE_API_URL) ||
+      (typeof window !== 'undefined' && window.API_URL) ||
       (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' ? 'http://localhost:3002' : 'https://lluvia-v.onrender.com')
     ).replace(/\/$/, '');
     const api = BACKEND_URL + '/employees';
