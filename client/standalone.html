@@ -479,24 +479,24 @@
       render();
     };
 
+    function hideLoader() {
+      const el = document.getElementById('loading');
+      if (el && !el.classList.contains('hide')) el.classList.add('hide');
+    }
+    setTimeout(hideLoader, 3600);
+
     /* Load data + initial trash badge */
     fetch(api)
       .then(r => r.json())
       .then(data => {
-        people = data; render();
+        people = Array.isArray(data) ? data : [];
+        render();
         updateBadge();
-        /* Wait for bar to finish then cinematic exit */
-        setTimeout(() => {
-          const bar = document.getElementById('load-bar');
-          const loadGlow = document.getElementById('load-glow');
-          const loadLogo = document.getElementById('load-logo');
-          bar.style.transition = 'width .4s ease';
-          bar.style.width = '100%';
-          if (loadLogo) { loadLogo.style.transition = 'transform .6s cubic-bezier(.34,1.56,.64,1)'; loadLogo.style.transform = 'scale(1.08)'; }
-          if (loadGlow) { loadGlow.style.transition = 'transform .6s ease,opacity .6s ease'; loadGlow.style.transform = 'translateY(-30px) scale(1.4)'; loadGlow.style.opacity = '.65'; }
-          setTimeout(() => document.getElementById('loading').classList.add('hide'), 600);
-        }, 2800);
+        setTimeout(hideLoader, 2800);
       })
-      .catch(() => { empty.textContent = 'Profiles are unavailable. Please restart the API.'; empty.style.display = ''; setTimeout(() => document.getElementById('loading').classList.add('hide'), 500); });
+      .catch(() => {
+        empty.style.display = '';
+        hideLoader();
+      });
   </script>
 </body></html>
